@@ -17,3 +17,54 @@
 // ***** DELETE MOVIES *****
 // TODO: Each movie should have a "delete" button
 // TODO: When this button is clicked, your javascript should send a DELETE request
+
+
+const URL = 'https://faithful-boatneck-trowel.glitch.me/movies';
+
+let HTML = '';
+
+// *** ON PAGE LOAD ***
+function generateMovies() {
+    fetch(URL)
+        .then(response => response.json())
+        .then(function(data) {
+            console.log(data);
+            $('#loading').replaceWith('');
+
+            data.forEach((movie, index, movieCollection) => {
+                HTML = `<div class="movie-card">
+                        <h5>${movie.title}</h5>
+                        <h6>Rating: ${movie.rating}</h6>
+                    </div>
+                    <br>`
+                $('#movie-section').append(HTML);
+            });
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+generateMovies();
+
+// *** WHEN SUBMITTED, CREATES NEW MOVIE OBJECT AND SENDS TO SERVER WITH POST REQUEST
+$('#submit-new-movie').click(function(e) {
+    e.preventDefault();
+    const moviePost = {id: '', title: $('#user-movie-title').val(), rating: $('#user-rating').val()};
+
+    const newMovieOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(moviePost),
+    };
+
+    fetch(URL, newMovieOptions)
+        .then(response => response.json())
+        .then(function(newPost) {
+            console.log(newPost);
+            location.reload();
+        });
+    // generateMovies();
+})
