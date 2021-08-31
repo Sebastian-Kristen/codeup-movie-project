@@ -19,7 +19,7 @@
 // TODO: When this button is clicked, your javascript should send a DELETE request
 
 
-const URL = 'https://faithful-boatneck-trowel.glitch.me/movies';
+const URL = 'https://ribbon-fluff-clipper.glitch.me/movies';
 
 let HTML = '';
 
@@ -47,6 +47,7 @@ function generateMovies() {
 
 generateMovies();
 
+
 // *** WHEN SUBMITTED, CREATES NEW MOVIE OBJECT AND SENDS TO SERVER WITH POST REQUEST
 $('#submit-new-movie').click(function(e) {
     e.preventDefault();
@@ -64,7 +65,11 @@ $('#submit-new-movie').click(function(e) {
         .then(response => response.json())
         .then(function(newPost) {
             console.log(newPost);
-            location.reload();
+            HTML = `<div class="movie-card">
+                        <h5>${newPost.title}</h5>
+                        <h6>Rating: ${newPost.rating}</h6>
+                    </div>
+                    <br>`
+            $('#movie-section').append(HTML);
         });
-    // generateMovies();
 })
