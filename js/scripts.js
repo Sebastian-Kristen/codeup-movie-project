@@ -19,7 +19,7 @@
 // TODO: When this button is clicked, your javascript should send a DELETE request
 
 
-const URL = 'https://ribbon-fluff-clipper.glitch.me/movies';
+const URL = 'https://heliotrope-jade-yard.glitch.me/movies';
 
 let HTML = '';
 
@@ -30,15 +30,14 @@ function generateMovies() {
         .then(function(data) {
             console.log(data);
             $('#loading').replaceWith('');
-
             data.forEach((movie, index, movieCollection) => {
-                HTML = `<div class="movie-card">
+                HTML += `<div class="movie-card">
                         <h5>${movie.title}</h5>
                         <h6>Rating: ${movie.rating}</h6>
                     </div>
                     <br>`
-                $('#movie-section').append(HTML);
             });
+            $('.movies-list').replaceWith(HTML)
         })
         .catch(error => {
             console.log(error);
