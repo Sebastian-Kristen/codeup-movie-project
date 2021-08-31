@@ -6,17 +6,17 @@
     <link href="css/bootstrap.css" rel="stylesheet">
 
 </head>
-<body>
+<body onload="checkEdits()">
 
     <p id="loading">Loading...</p>
 
     <form id="new-movie-form">
         <label for="user-movie-title">Movie Title</label>
-        <input id="user-movie-title" name="title" type="text">
+        <input id="user-movie-title" name="title" type="text" contentedible="true">
         <br>
 
         <label for="user-rating">Rating</label>
-        <input id="user-rating" name="rating" type="text">
+        <input id="user-rating" name="rating" type="text" contentedible="true">
         <br>
 
         <input type="submit" id="submit-new-movie">
@@ -30,6 +30,13 @@
 <!--        </div>-->
     </div>
 
+<!--    this is the edit button/saves edit adds functionality-->
+    <div id="edit" contentedible="true"></div>
+    <input type="button" value="save edits" onclick="function saveEdits() {
+
+    }
+    saveEdits()"/>
+    <div id="update">Edit and click save for next time!ᕕ( ᐛ )ᕗ</div>
 
     <script src="js/jquery-3.6.0.js"></script>
     <script src="js/bootstrap.bundle.js"></script>

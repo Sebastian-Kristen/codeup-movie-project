@@ -33,7 +33,7 @@ function generateMovies() {
 
             data.forEach((movie, index, movieCollection) => {
                 HTML = `<div class="movie-card">
-                        <h5>${movie.title}</h5>
+                        <h5 contenteditable="true">${movie.title}</h5>
                         <h6>Rating: ${movie.rating}</h6>
                     </div>
                     <br>`
@@ -73,3 +73,23 @@ $('#submit-new-movie').click(function(e) {
             $('#movie-section').append(HTML);
         });
 })
+//Edit button function
+
+function saveEdits() {
+
+    //get the element that will be edited
+    var editElem = document.getElementById("edit");
+       //edit movie title from user
+    var UserMovieTitle = editElem.innerHTML;
+
+    URL.userEdits = userVersion;
+
+    document.getElementById("update").innerHTML="Edits saved!"
+
+}
+function checkEdits() {
+    if(URL.userMovieTitle!=null) document.getElementById("edit").innerHtml = URL.userEdits;
+}
+
+var editElem = document.getElementById("edit");
+editElem.contentEditable="false";
