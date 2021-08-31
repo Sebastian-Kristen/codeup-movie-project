@@ -34,7 +34,7 @@ function generateMovies() {
             data.forEach((movie, index, movieCollection) => {
                 HTML = `<div class="movie-card">
                         <h5 contenteditable="true">${movie.title}</h5>
-                        <h6>Rating: ${movie.rating}</h6>
+                        <h6 contenteditable="true">Rating: ${movie.rating}</h6content>
                     </div>
                     <br>`
                 $('#movie-section').append(HTML);
@@ -80,16 +80,18 @@ function saveEdits() {
     //get the element that will be edited
     var editElem = document.getElementById("edit");
        //edit movie title from user
-    var UserMovieTitle = editElem.innerHTML;
+    var UserVersion = editElem.innerHTML;
 
-    URL.userEdits = userVersion;
+    localStorage.userEdits = userVersion;
 
     document.getElementById("update").innerHTML="Edits saved!"
 
 }
 function checkEdits() {
-    if(URL.userMovieTitle!=null) document.getElementById("edit").innerHtml = URL.userEdits;
+    if(localStorage.userEdits!=null) document.getElementById("edit").innerHTML = localStorage.userEdits;
 }
+  //The “contenteditable” attribute can be set to true, false or inherit – in which case the property is determined
+// by whether or not the parent element is editable.
 
-var editElem = document.getElementById("edit");
-editElem.contentEditable="false";
+
+
