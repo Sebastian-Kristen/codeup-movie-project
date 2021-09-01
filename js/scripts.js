@@ -19,6 +19,7 @@
 // TODO: When this button is clicked, your javascript should send a DELETE request
 
 
+
 const URL = 'https://ribbon-fluff-clipper.glitch.me/movies';
 
 let HTML = '';
@@ -30,15 +31,15 @@ function generateMovies() {
         .then(function(data) {
             console.log(data);
             $('#loading').replaceWith('');
-
-            data.forEach((movie, index, movieCollection) => {
-                HTML = `<div class="movie-card">
-                        <h5 contenteditable="true">${movie.title}</h5>
-                        <h6 contenteditable="true">Rating: ${movie.rating}</h6content>
+            data.forEach(movie => {
+                HTML += `<div class="movie-card">
+                        <h5 contenteditable="true" id="edit">${movie.title}</h5>
+                        <h6 contenteditable="true" id="edit">Rating: ${movie.rating}</h6>
+                        <button type="button" class="delete" id="${movie.id}">Delete</button> 
                     </div>
                     <br>`
-                $('#movie-section').append(HTML);
             });
+            $('.movies-list').replaceWith(HTML)
         })
         .catch(error => {
             console.log(error);
@@ -48,7 +49,8 @@ function generateMovies() {
 generateMovies();
 
 
-// *** WHEN SUBMITTED, CREATES NEW MOVIE OBJECT AND SENDS TO SERVER WITH POST REQUEST
+
+// *** WHEN SUBMITTED, CREATES NEW MOVIE OBJECT AND SENDS TO SERVER WITH POST REQUEST ***
 $('#submit-new-movie').click(function(e) {
     e.preventDefault();
     const moviePost = {id: '', title: $('#user-movie-title').val(), rating: $('#user-rating').val()};
@@ -59,6 +61,10 @@ $('#submit-new-movie').click(function(e) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(moviePost),
+    };
+
+    const deleteOptions = {
+        method: 'DELETE'
     };
 
     fetch(URL, newMovieOptions)
@@ -72,26 +78,76 @@ $('#submit-new-movie').click(function(e) {
                     <br>`
             $('#movie-section').append(HTML);
         });
-})
+});
+
+
+// DELETE POST FUNCTION
+function deletePost(id) {
+    fetch(`${URL}/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(() => {
+            console.log(`Successfully deleted movie with id of ${id}`)
+        })
+        .catch(console.error)
+}
+
+
+// DELETE BUTTON FUNCTIONALITY
+$('.delete').click(function() {
+    console.log("test");
+    // e.preventDefault();
+    var id = $(this).attr('id');
+    deletePost(id);
+});
 //Edit button function
+$("#update").click(function(e) {
+    e.preventDefault();
+    alert("clicked!");
+});
 
-function saveEdits() {
+const editMovieTitle = movie => fetch(`${URL}/${movie.id}`, {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(movie)
+})
+    .then(res => res.json())
+    .then(data => {
+        console.log(`Success: edited ${JSON.stringify(data)}`);
+    });
 
-    //get the element that will be edited
-    var editElem = document.getElementById("edit");
-       //edit movie title from user
-    var UserVersion = editElem.innerHTML;
 
-    localStorage.userEdits = userVersion;
+fetch(URL, editMovieTitle)
+    .then(response => response.json())
+    .then(function(editedPost) {
+        console.log(editedPost);
+        HTML = `<div class="movie-card" id="${editedPost.id}">
+                        <h5 contenteditable="true">${editedPost.title}</h5>
+                        <h6 contenteditable="true">Rating: ${editedPost.rating}</h6>
+                    </div>
+                    <br>`
+        $('').replaceWith(HTML);
+    });
 
-    document.getElementById("update").innerHTML="Edits saved!"
 
-}
-function checkEdits() {
-    if(localStorage.userEdits!=null) document.getElementById("edit").innerHTML = localStorage.userEdits;
-}
-  //The “contenteditable” attribute can be set to true, false or inherit – in which case the property is determined
-// by whether or not the parent element is editable.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
