@@ -6,40 +6,34 @@
     <link href="css/bootstrap.css" rel="stylesheet">
 
 </head>
-<body onload="checkEdits()">
+<body>
 
-    <p id="loading">Loading...</p>
+<p id="loading">Loading...</p>
 
-    <form id="new-movie-form">
-        <label for="user-movie-title">Movie Title</label>
-        <input id="user-movie-title" name="title" type="text" contentedible="true">
-        <br>
+<form id="new-movie-form">
+    <label for="user-movie-title">Movie Title</label>
+    <input id="user-movie-title" name="title" type="text">
+    <br>
 
-        <label for="user-rating">Rating</label>
-        <input id="user-rating" name="rating" type="text" contentedible="true">
-        <br>
+    <label for="user-rating">Rating</label>
+    <input id="user-rating" name="rating" type="text">
+    <br>
 
-        <input type="submit" id="submit-new-movie">
-    </form>
+    <input type="submit" id="submit-new-movie">
+    <input type="button" id="update" value="save edits">
+    <div> Edit and click save for next time!</div>
+</form>
 
 
-    <div id="movie-section">
-<!--        <div class="movie-card" id="card-template">-->
-<!--            <h5>Princess Mononoke</h5>-->
-<!--            <h6>Rating: *****</h6>-->
-<!--        </div>-->
-    </div>
+<div id="movie-section">
+    <div class="movies-list"></div>
+</div>
 
-<!--    this is the edit button/saves edit adds functionality-->
-    <div id="edit" contentedible="true"></div>
-    <input type="button" value="save edits" onclick="function saveEdits() {
 
-    }
-    saveEdits()"/>
-    <div id="update">Edit and click save for next time!ᕕ( ᐛ )ᕗ</div>
 
-    <script src="js/jquery-3.6.0.js"></script>
-    <script src="js/bootstrap.bundle.js"></script>
-    <script src="js/scripts.js"></script>
+<script src="js/jquery-3.6.0.js"></script>
+<script src="js/bootstrap.bundle.js"></script>
+<script src="js/scripts.js"></script>
 </body>
 </html>
+
