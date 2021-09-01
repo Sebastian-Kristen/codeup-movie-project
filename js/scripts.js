@@ -22,7 +22,7 @@
 
 const URL = 'https://ribbon-fluff-clipper.glitch.me/movies';
 
-let HTML = '';
+
 
 // *** ON PAGE LOAD ***
 function generateMovies() {
@@ -31,6 +31,7 @@ function generateMovies() {
         .then(function(data) {
             console.log(data);
             $('#loading').replaceWith('');
+            let HTML = '';
             data.forEach(movie => {
                 HTML += `<div class="movie-card">
                         <h5 contenteditable="true" id="edit">${movie.title}</h5>
@@ -71,7 +72,7 @@ $('#submit-new-movie').click(function(e) {
         .then(response => response.json())
         .then(function(newPost) {
             console.log(newPost);
-            HTML = `<div class="movie-card">
+            let HTML = `<div class="movie-card">
                         <h5>${newPost.title}</h5>
                         <h6>Rating: ${newPost.rating}</h6>
                     </div>
@@ -81,7 +82,7 @@ $('#submit-new-movie').click(function(e) {
 });
 
 
-// DELETE POST FUNCTION
+// *** DELETE POST FUNCTION ***
 function deletePost(id) {
     fetch(`${URL}/${id}`, {
         method: 'DELETE',
@@ -97,14 +98,21 @@ function deletePost(id) {
 }
 
 
-// DELETE BUTTON FUNCTIONALITY
-$('.delete').click(function() {
-    console.log("test");
-    // e.preventDefault();
-    var id = $(this).attr('id');
-    deletePost(id);
-});
-//Edit button function
+// *** DELETE BUTTON FUNCTIONALITY ***
+const delay = 1000;
+
+let timeoutForDelete = setTimeout(function() {
+    $('.delete').click(function(e) {
+        e.preventDefault();
+        var id = $(e.target).attr('id');
+        deletePost(id);
+        // location.reload(true);
+    });
+}, delay);
+
+
+
+// *** EDIT BUTTON FUNCTION ***
 $("#update").click(function(e) {
     e.preventDefault();
     alert("clicked!");
@@ -127,7 +135,7 @@ fetch(URL, editMovieTitle)
     .then(response => response.json())
     .then(function(editedPost) {
         console.log(editedPost);
-        HTML = `<div class="movie-card" id="${editedPost.id}">
+        let HTML = `<div class="movie-card" id="${editedPost.id}">
                         <h5 contenteditable="true">${editedPost.title}</h5>
                         <h6 contenteditable="true">Rating: ${editedPost.rating}</h6>
                     </div>
