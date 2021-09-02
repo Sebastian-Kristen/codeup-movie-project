@@ -63,10 +63,6 @@ $('#submit-new-movie').click(function(e) {
         body: JSON.stringify(moviePost),
     };
 
-    const deleteOptions = {
-        method: 'DELETE'
-    };
-
     fetch(URL, newMovieOptions)
         .then(response => response.json())
         .then(function(newPost) {
