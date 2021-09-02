@@ -24,7 +24,7 @@ const URL = 'https://ribbon-fluff-clipper.glitch.me/movies';
 
 
 
-// *** ON PAGE LOAD ***
+// *** ON PAGE LOAD GENERATE MOVIES FROM SERVER ***
 function generateMovies() {
     fetch(URL)
         .then(response => response.json())
@@ -50,8 +50,7 @@ function generateMovies() {
 generateMovies();
 
 
-
-// *** WHEN SUBMITTED, CREATES NEW MOVIE OBJECT AND SENDS TO SERVER WITH POST REQUEST ***
+// *** CREATE NEW MOVIE FUNCTIONALITY ***
 $('#submit-new-movie').click(function(e) {
     e.preventDefault();
     const moviePost = {id: '', title: $('#user-movie-title').val(), rating: $('#user-rating').val()};
@@ -111,38 +110,40 @@ let timeoutForDelete = setTimeout(function() {
 }, delay);
 
 
+// *** EDIT POST FUNCTION ***
+    const editMovieTitle = movie => fetch(`${URL}/${movie.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(movie)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(`Success: edited ${JSON.stringify(data)}`);
+        });
 
-// *** EDIT BUTTON FUNCTION ***
+
+// *** EDIT BUTTON FUNCTIONALITY ***
 $("#update").click(function(e) {
     e.preventDefault();
     alert("clicked!");
 });
 
-const editMovieTitle = movie => fetch(`${URL}/${movie.id}`, {
-    method: 'PUT',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(movie)
-})
-    .then(res => res.json())
-    .then(data => {
-        console.log(`Success: edited ${JSON.stringify(data)}`);
-    });
 
 
-fetch(URL, editMovieTitle)
-    .then(response => response.json())
-    .then(function(editedPost) {
-        console.log(editedPost);
-        let HTML = `<div class="movie-card" id="${editedPost.id}">
-                        <h5 contenteditable="true">${editedPost.title}</h5>
-                        <h6 contenteditable="true">Rating: ${editedPost.rating}</h6>
-                    </div>
-                    <br>`
-        $('').replaceWith(HTML);
-    });
-
+// fetch(URL, editMovieTitle)
+//     .then(response => response.json())
+//     .then(function(editedPost) {
+//         console.log(editedPost);
+//         let HTML = `<div class="movie-card" id="${editedPost.id}">
+//                         <h5 contenteditable="true">${editedPost.title}</h5>
+//                         <h6 contenteditable="true">Rating: ${editedPost.rating}</h6>
+//                     </div>
+//                     <br>`
+//         $('').replaceWith(HTML);
+//     });
+//
 
 
 
